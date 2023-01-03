@@ -1,8 +1,8 @@
 package ru.mirea.diff.metrics;
 
-import difflib.Delta;
-import difflib.DiffUtils;
-import difflib.Patch;
+import com.github.difflib.DiffUtils;
+import com.github.difflib.patch.AbstractDelta;
+import com.github.difflib.patch.Patch;
 import ru.mirea.diff.proj.Source;
 
 import java.util.List;
@@ -12,8 +12,8 @@ public final class TextLinesMetric implements Metric {
     static <T> int getDelta(List<T> list1, List<T> list2) {
         Patch<T> diff = DiffUtils.diff(list1, list2);
         int sum = 0;
-        for (Delta<T> delta : diff.getDeltas()) {
-            sum += Math.max(delta.getOriginal().size(), delta.getRevised().size());
+        for (AbstractDelta<T> delta : diff.getDeltas()) {
+            sum += Math.max(delta.getSource().size(), delta.getTarget().size());
         }
         return sum;
     }

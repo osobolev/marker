@@ -1,9 +1,9 @@
 package ru.mirea.diff.metrics;
 
-import difflib.Chunk;
-import difflib.Delta;
-import difflib.DiffUtils;
-import difflib.Patch;
+import com.github.difflib.DiffUtils;
+import com.github.difflib.patch.AbstractDelta;
+import com.github.difflib.patch.Chunk;
+import com.github.difflib.patch.Patch;
 import ru.mirea.diff.proj.Source;
 
 import java.util.ArrayList;
@@ -36,9 +36,9 @@ public final class TextCharsMetric implements Metric {
     static Measure diff(List<String> l1, List<String> l2) {
         Patch<String> diff = DiffUtils.diff(l1, l2);
         int sum = 0;
-        for (Delta<String> delta : diff.getDeltas()) {
-            Chunk<String> deleted = delta.getOriginal();
-            Chunk<String> inserted = delta.getRevised();
+        for (AbstractDelta<String> delta : diff.getDeltas()) {
+            Chunk<String> deleted = delta.getSource();
+            Chunk<String> inserted = delta.getTarget();
             switch (delta.getType()) {
             case DELETE:
                 sum += size(deleted.getLines());
