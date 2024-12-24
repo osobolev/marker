@@ -28,7 +28,7 @@ public final class HierarchicalSequence implements AlgorithmSequence {
 
     public List<ClusterAlgorithm> algorithms(double[][] matrix) {
         Hierarchical hierarchical = new Hierarchical(1, linkage);
-        ArrayList<List<List<Integer>>> history = new ArrayList<>();
+        List<List<List<Integer>>> history = new ArrayList<>();
         hierarchical.cluster(matrix, history);
         List<ClusterAlgorithm> algorithms = new ArrayList<>(history.size());
         for (List<List<Integer>> clusters : history) {
